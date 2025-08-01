@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import "../styles/index.css";
 import type { ButtonEntry } from "../constants/buttons";
-import { OnClickHandler } from "./clickHandler";
+import { useScriptClickHandler } from "./clickHandler";
+import { BgPopUpContext } from "./context";
 
-export default function ButtonLoader() {
+export default function ButtonComponent() {
     const [buttons, setButtons] = useState<ButtonEntry[]>([]);
 
     useEffect(() => {
@@ -13,11 +14,25 @@ export default function ButtonLoader() {
             //.catch(err => {throw Error('Error loading buttons:', err)});
     }, []);
 
+    const _bgPopupContext = useContext(BgPopUpContext);
+
+    const HandleClick = (button: ButtonEntry) => {
+        switch (button.type) {
+            case ("link"):
+                return; // Launch Web Page Here
+            case ("script"):
+                console.log("script");
+                return useScriptClickHandler(button, _bgPopupContext)();
+            default:
+                throw Error("Unsupported Button Type");
+        }
+    }
+
     return (
         <div id="buttons" className="button-container">
             {
                 buttons.map((btn, index) => (
-                    <button className="cybr-btn" onClick={() => OnClickHandler(btn)}>
+                    <button key={"btn" + index} className="cybr-btn" onClick={() => HandleClick(btn)}>
                         {btn.title} <span aria-hidden>_</span>
                         <span aria-hidden className="cybr-btn__glitch">{btn.desc}</span>
                         <span aria-hidden className="cybr-btn__tag"></span>

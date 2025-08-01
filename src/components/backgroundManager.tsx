@@ -1,21 +1,10 @@
 // url("/assets/background.jpg")
 import { useCookies } from "./cookieManager";
 import { useState, useContext } from "react"
-import type { Dispatch, SetStateAction } from "react";
 import { Popup } from "reactjs-popup";
-import { createContext } from "react";
+import { BgPopUpContext } from "./context";
 
-type PopupContext = {
-    isOpen: boolean,
-    setIsOpen: Dispatch<SetStateAction<boolean>> 
-}
-
-export const BgPopUpContext = createContext<PopupContext>({
-    isOpen: false,
-    setIsOpen: () => {}
-});
-
-export function setBackground (url?: string) { 
+export function BackgroundComponent ({url}: {url?: string}) { 
     const [bgImage, setBgImage] = useState<string>("/assets/default_bg.jpg");
 
     if (url) {
@@ -23,12 +12,12 @@ export function setBackground (url?: string) {
     }
 
     const {isOpen} = useContext(BgPopUpContext);
-
+    console.log("meow", isOpen);
     return (
         <div>
             <Popup open={isOpen}>
-                <div>
-                    <h1>Wassup my ninjas</h1>
+                <div id="BackgroundPopup" className="title-container">
+                    <h1> Yuppie, its working~ </h1>
                 </div>
             </Popup>
             <div id="background"

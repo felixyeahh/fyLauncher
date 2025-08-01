@@ -1,8 +1,8 @@
 import { useState, type JSX } from "react";
-import ButtonLoader from "./components/buttonLoader";
+import ButtonComponent from "./components/buttonComponent";
 import { useCookies } from "./components/cookieManager";
-import { setBackground } from "./components/backgroundManager";
-import { BgPopUpContext } from "./components/backgroundManager";
+import { BackgroundComponent } from "./components/backgroundManager";
+import { BgPopUpContext } from "./components/context";
 import onUnload from "./components/onUnload";
 import "./styles/index.css";
 
@@ -55,9 +55,9 @@ function MakeBackground () {
     const cookie = useCookies("background");
 
     if (typeof cookie[0] === "string") {
-        return setBackground(cookie[0]);
+        return <BackgroundComponent url={cookie[0]}/>;
     }
-    return setBackground();
+    return <BackgroundComponent/>;
 }
 
 function App () {
@@ -72,7 +72,7 @@ function App () {
 
     return (
         <BgPopUpContext.Provider value={{isOpen, setIsOpen}}>
-            <ButtonLoader/>
+            <ButtonComponent/>
             <MakeTitle/>
             <MakeBackground/>
         </BgPopUpContext.Provider>
