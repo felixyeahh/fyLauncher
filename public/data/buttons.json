@@ -1,0 +1,16 @@
+{
+    "buttons":  [
+        {
+            "title": "iFrameSearch", 
+            "desc": "best thing ever",
+            "url": "https://google.com/search?igu=1",
+            "type": "link"
+        },
+        {
+            "title": "Set Background", 
+            "desc": "u can do dat now??",
+            "type": "script",
+            "onClick": "setBackground"
+        }
+    ]
+}
