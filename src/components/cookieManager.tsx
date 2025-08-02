@@ -9,6 +9,7 @@ type Options = {
 
 export const useCookies = (key: string): [string | undefined, (value: string, options?: Options) => void] => {
     console.log("Cookies", key);
+
     const [cookieValue, setCookieValue] = useState<string | undefined>(() => {
         const cookie = document.cookie
             .split("; ")
@@ -41,5 +42,5 @@ export const useCookies = (key: string): [string | undefined, (value: string, op
         setCookieValue(value);
     };
 
-    return [cookieValue, setCookie];
+    return [cookieValue, setCookie] as const;
 };

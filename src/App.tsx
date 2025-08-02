@@ -61,13 +61,8 @@ function MakeBackground () {
 }
 
 function App () {
-    /*const App = new Array<JSX.Element>();
+    /* onUnload(); */
 
-    App.push(MakeBackground());
-    App.push(<ButtonLoader/>);
-    App.push(MakeTitle());
-    
-    onUnload();*/
     const [isOpen, setIsOpen] = useState(false);
 
     return (

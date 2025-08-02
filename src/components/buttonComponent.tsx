@@ -21,7 +21,6 @@ export default function ButtonComponent() {
             case ("link"):
                 return; // Launch Web Page Here
             case ("script"):
-                console.log("script");
                 return useScriptClickHandler(button, _bgPopupContext)();
             default:
                 throw Error("Unsupported Button Type");

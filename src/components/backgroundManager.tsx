@@ -1,25 +1,48 @@
-// url("/assets/background.jpg")
 import { useCookies } from "./cookieManager";
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import { Popup } from "reactjs-popup";
 import { BgPopUpContext } from "./context";
+import type { FormEvent } from "react";
+
+function BackgroundPopupComponent() {
+
+}
 
 export function BackgroundComponent ({url}: {url?: string}) { 
     const [bgImage, setBgImage] = useState<string>("/assets/default_bg.jpg");
+    console.log(bgImage, url);
+    useEffect(() => {
+        if (typeof url === "string") {
+            console.log(bgImage, url);
+            setBgImage(url);
+        }
+    }, [url]);
 
-    if (url) {
-        setBgImage(url);
+    const {isOpen, setIsOpen} = useContext(BgPopUpContext);
+    console.log("Making Background")
+    const [backgroundValue, setBackground] = useCookies("background");
+    console.log("Done");
+    const updateBackground = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+    
+        const url = (event.currentTarget.elements.namedItem("url") as HTMLInputElement).value;
+        console.log(url);
+        setBackground(url);
+        return location.reload();
     }
 
-    const {isOpen} = useContext(BgPopUpContext);
-    console.log("meow", isOpen);
     return (
         <div>
-            <Popup open={isOpen}>
-                <div id="BackgroundPopup" className="title-container">
-                    <h1> Yuppie, its working~ </h1>
+            <Popup open={isOpen} onClose={() => {setIsOpen(!isOpen)}}>
+                <div id="BackgroundPopup" className="popup-container">
+                    <form onSubmit={(event) => {updateBackground(event)}}> 
+                        <label form="bg-url">Enter URL: </label>
+                        <input type="text" id="bg-url" name="url" required/>
+                        <input type="submit" value={"✔"}/>
+                    </form>
                 </div>
             </Popup>
+
             <div id="background"
                 style={{
                     position: "fixed",
@@ -35,11 +58,4 @@ export function BackgroundComponent ({url}: {url?: string}) {
             </div>
         </div>
     )
-}
-
-export function updateBackground (url: string) {
-    const bg = useCookies("background");
-
-    bg[1](url);
-    return location.reload();
 }
