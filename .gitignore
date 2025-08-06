@@ -4,6 +4,7 @@
 .firebaserc
 firebase.json
 **.cache
+404.html
 
 # React Router
 /.react-router/
