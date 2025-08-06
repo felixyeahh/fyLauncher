@@ -1,7 +1,7 @@
 import type { ButtonEntry } from "src/constants/buttons";
 import type { PopupContext } from "./context"
 
-export function useScriptClickHandler(btn: ButtonEntry, context: PopupContext) {
+export default function useScriptClickHandler(btn: ButtonEntry, context: PopupContext) {
     const {isOpen, setIsOpen} = context;
 
     return function ScriptClickHandler() {

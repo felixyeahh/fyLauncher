@@ -10,3 +10,17 @@ export const BgPopUpContext = createContext<PopupContext>({
     isOpen: false,
     setIsOpen: () => {}
 });
+
+export type FrameOpenContextType = {
+    isFrameOpen: boolean,
+    setIsFrameOpen: Dispatch<SetStateAction<boolean>>,
+    activeUrl: string | null,
+    setActiveUrl:  Dispatch<SetStateAction<string | null>>,
+}
+
+export const FrameOpenContext = createContext<FrameOpenContextType>({
+    isFrameOpen: false,
+    setIsFrameOpen: () => {},
+    activeUrl: null,
+    setActiveUrl: () => {}
+})

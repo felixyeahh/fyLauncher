@@ -1,8 +1,9 @@
 import { useEffect, useState, useContext } from "react";
 import "../styles/index.css";
 import type { ButtonEntry } from "../constants/buttons";
-import { useScriptClickHandler } from "./clickHandler";
-import { BgPopUpContext } from "./context";
+import useScriptClickHandler from "./clickHandler";
+import { BgPopUpContext, FrameOpenContext } from "./context";
+import useLinkButtonHandler from "./linkButtonHandler";
 
 export default function ButtonComponent() {
     const [buttons, setButtons] = useState<ButtonEntry[]>([]);
@@ -15,11 +16,12 @@ export default function ButtonComponent() {
     }, []);
 
     const _bgPopupContext = useContext(BgPopUpContext);
+    const _frameContext = useContext(FrameOpenContext);
 
     const HandleClick = (button: ButtonEntry) => {
         switch (button.type) {
             case ("link"):
-                return; // Launch Web Page Here
+                return useLinkButtonHandler(button, _frameContext)();
             case ("script"):
                 return useScriptClickHandler(button, _bgPopupContext)();
             default:

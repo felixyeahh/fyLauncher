@@ -4,44 +4,46 @@ import { Popup } from "reactjs-popup";
 import { BgPopUpContext } from "./context";
 import type { FormEvent } from "react";
 
-function BackgroundPopupComponent() {
-
+type BackgroundComponentPopupProps = {
+    open: boolean, 
+    onClose : () => void,
+    onSubmit: (event: FormEvent<HTMLFormElement>) => void
 }
 
-export function BackgroundComponent ({url}: {url?: string}) { 
+function BackgroundPopupComponent(props: BackgroundComponentPopupProps) {
+    return <Popup open={props.open} onClose={props.onClose}>
+        <div id="BackgroundPopup" className="popup-container">
+            <form onSubmit={(event) => {props.onSubmit(event)}}> 
+                <label form="bg-url">Enter URL: </label>
+                <input type="text" id="bg-url" name="url" required/>
+                <input type="submit" value={"✔"}/>
+            </form>
+        </div>
+    </Popup>
+}
+
+export default function BackgroundComponent ({url}: {url?: string}) { 
     const [bgImage, setBgImage] = useState<string>("/assets/default_bg.jpg");
-    console.log(bgImage, url);
+    const {isOpen, setIsOpen} = useContext(BgPopUpContext);
+    const [backgroundValue, setBackground] = useCookies("background");
+
     useEffect(() => {
         if (typeof url === "string") {
-            console.log(bgImage, url);
             setBgImage(url);
         }
     }, [url]);
 
-    const {isOpen, setIsOpen} = useContext(BgPopUpContext);
-    console.log("Making Background")
-    const [backgroundValue, setBackground] = useCookies("background");
-    console.log("Done");
     const updateBackground = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
     
         const url = (event.currentTarget.elements.namedItem("url") as HTMLInputElement).value;
-        console.log(url);
         setBackground(url);
         return location.reload();
     }
 
     return (
-        <div>
-            <Popup open={isOpen} onClose={() => {setIsOpen(!isOpen)}}>
-                <div id="BackgroundPopup" className="popup-container">
-                    <form onSubmit={(event) => {updateBackground(event)}}> 
-                        <label form="bg-url">Enter URL: </label>
-                        <input type="text" id="bg-url" name="url" required/>
-                        <input type="submit" value={"✔"}/>
-                    </form>
-                </div>
-            </Popup>
+        <div id="BackgroundComponents"> 
+            <BackgroundPopupComponent open={isOpen} onClose={() => {setIsOpen(!isOpen)}} onSubmit={(event: FormEvent<HTMLFormElement>) => {updateBackground(event)}} />
 
             <div id="background"
                 style={{

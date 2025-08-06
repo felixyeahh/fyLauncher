@@ -3,10 +3,8 @@
 import { useState } from "react";
 import { useBeforeUnload } from "react-use";
 
-export default function onUnload() {
-    let [isToggled, setIsToggled] = useState<boolean>(true);
+export default function OnUnloadComponent() {
+    useBeforeUnload(true, "Teachers bagging u again?");
 
-    useBeforeUnload(isToggled, "Teachers bagging u again?");
-
-    return setIsToggled;
+    return (<div></div>);
 }
