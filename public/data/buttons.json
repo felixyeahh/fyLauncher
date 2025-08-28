@@ -11,6 +11,24 @@
             "desc": "u can do dat now??",
             "type": "script",
             "onClick": "setBackground"
+        },
+        {
+            "title": "Webogram",
+            "desc": "Pls dont mark as phishing",
+            "url": "https://fytgframe.web.app/",
+            "type": "link"
+        },
+        {
+            "title": "test", 
+            "desc": "test",
+            "url": "https://worldguessr.com",
+            "type": "link"
+        },
+        {
+            "title": "test2", 
+            "desc": "test2",
+            "url": "https://mathwow.org",
+            "type": "link"
         }
     ]
 }
